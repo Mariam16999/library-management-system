@@ -24,7 +24,20 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.tomcat.embed</groupId>
+                    <artifactId>tomcat-embed-core</artifactId>
+                </exclusion>
+
+                <!-- Add more exclusions if needed for other Tomcat logging dependencies -->
+            </exclusions>
         </dependency>
+
 
         <dependency>
             <groupId>com.mysql</groupId>
@@ -36,7 +49,14 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
-
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-undertow</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -50,6 +70,7 @@
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
                         </exclude>
+
                     </excludes>
                 </configuration>
             </plugin>
@@ -64,10 +85,23 @@
                 <datasource.username>root</datasource.username>
                 <datasource.password>root</datasource.password>
                 <context-path>/api</context-path>
+                <log.level>info</log.level>
+                <log.path>E:/Java_Log/</log.path>
             </properties>
         </profile>
         <profile>
             <id>prod</id>
+            <properties>
+                <server.port>8082</server.port>
+                <datasource.url>jdbc:mysql://localhost:3306/library</datasource.url>
+                <datasource.username>root</datasource.username>
+                <datasource.password>root</datasource.password>
+                <context-path>/api</context-path>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>test</id>
             <properties>
                 <server.port>8082</server.port>
                 <datasource.url>jdbc:mysql://localhost:3306/library</datasource.url>
